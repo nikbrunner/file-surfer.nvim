@@ -3,102 +3,77 @@
 </p>
 
 <p align="center">
-    > A catch phrase that describes your plugin.
+    Find your most important files fast. 🏃‍♀️ 💨
 </p>
 
 <div align="center">
-    > Drag your video (<10MB) here to host it for free on GitHub.
-</div>
-
-<div align="center">
-
-> Videos don't work on GitHub mobile, so a GIF alternative can help users.
-
-_[GIF version of the showcase video for mobile users](SHOWCASE_GIF_LINK)_
-
+    <img src="./assets/banner.jpg" alt="Banner" width="100%"/>
 </div>
 
 ## ⚡️ Features
 
-> Write short sentences describing your plugin features
+- ⚡ Quickly find files in a predefined set of directories
+  - 📂 Define static paths
+  - 📦 Define dynamic paths to scan for directories with a certain depth and optionally only include directories with a `.git` folder
+- ✨ Automatically change directory to the selected Folder
+- ⌘ Create a user command to quickly open the finder
+- ⛏️ Use `FzfLua` as the picker (Others to be added in the future)
 
-- FEATURE 1
-- FEATURE ..
-- FEATURE N
+## 🏗️ Installation
 
-## 📋 Installation
-
-<div align="center">
-<table>
-<thead>
-<tr>
-<th>Package manager</th>
-<th>Snippet</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-[wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
-
-</td>
-<td>
+Installation with [folke/lazy.nvim](https://github.com/folke/lazy.nvim).
 
 ```lua
--- stable version
-use {"fff.nvim", tag = "*" }
--- dev version
-use {"fff.nvim"}
+---@module "lazy"
+---@type LazyPluginSpec
+return {
+    "nikbrunner/fff.nvim",
+    dependencies = {
+        "ibhagwan/fzf-lua" -- Required for the picker
+    },
+    event = "VeryLazy",
+---@module "fff"
+---@type fff.Config
+    opts = {
+        -- Example opts for paths. By default, there are no paths defined.
+        paths = {
+            static = {
+                ["~/.scripts"] = vim.fn.expand("$HOME") .. "/.scripts",
+            },
+            dynamic = {
+                {
+                    -- For example add your project folder where you clone all your repos
+                    path = vim.fn.expand("~/repos"),
+                    scan_depth = 2,
+                    use_git = true, -- Only include directories with a .git folder
+                },
+                {
+                    -- Or add your config folder to quickly find your config files
+                    path = vim.fn.expand("$XDG_CONFIG_HOME"),
+                    scan_depth = 1,
+                },
+            },
+        },
+    },
+    keys = {
+        {
+            "<leader>f",
+            function()
+                require("fff").find()
+            end,
+            desc = "Find File in Folder",
+        },
+    },
+}
 ```
-
-</td>
-</tr>
-<tr>
-<td>
-
-[junegunn/vim-plug](https://github.com/junegunn/vim-plug)
-
-</td>
-<td>
-
-```lua
--- stable version
-Plug "fff.nvim", { "tag": "*" }
--- dev version
-Plug "fff.nvim"
-```
-
-</td>
-</tr>
-<tr>
-<td>
-
-[folke/lazy.nvim](https://github.com/folke/lazy.nvim)
-
-</td>
-<td>
-
-```lua
--- stable version
-require("lazy").setup({{"fff.nvim", version = "*"}})
--- dev version
-require("lazy").setup({"fff.nvim"})
-```
-
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 
 ## ☄ Getting started
 
 > Describe how to use the plugin the simplest way
 
-## ⚙ Configuration
+TODO
 
-> The configuration list sometimes become cumbersome, making it folded by default reduce the noise of the README file.
+## ⚙ Configuration
 
 <details>
 <summary>Click to unfold the full list of options with their default values</summary>
@@ -106,18 +81,43 @@ require("lazy").setup({"fff.nvim"})
 > **Note**: The options are also available in Neovim by calling `:h fff.options`
 
 ```lua
-require("fff").setup({
-    -- you can copy the full list from lua/fff/config.lua
-})
+---@class fff.Config.Paths.Dynamic
+---@field path string The root directory paths
+---@field scan_depth integer The depth of the search
+---@field use_git boolean Wether to only include directories with a .git folder
+
+---@class fff.Config.Paths
+---@field static? table<string, string> A list of preset Paths
+---@field dynamic? table<fff.Config.Paths.Dynamic> A list of dynamic paths
+
+---@class fff.Config
+---@field change_dir? boolean Wether to change the directory to the selected folder
+---@field user_command? string Name for the user command to create
+---@field paths? fff.Config.Paths Configuration for paths
+M.config = {
+  backend = "fzf",
+  change_dir = false,
+  user_command = nil,
+  paths = {
+    static = {},
+    dynamic = {
+      {
+        path = vim.fn.expand("~/repos"),
+        level = 1,
+        use_git = true,
+      },
+    },
+  },
+}
 ```
 
 </details>
 
 ## 🧰 Commands
 
-|   Command   |         Description        |
-|-------------|----------------------------|
-|  `:Toggle`  |     Enables the plugin.    |
+| Command   | Description         |
+| --------- | ------------------- |
+| `:Toggle` | Enables the plugin. |
 
 ## ⌨ Contributing
 
@@ -129,4 +129,13 @@ You can find guides and showcase of the plugin on [the Wiki](https://github.com/
 
 ## 🎭 Motivations
 
-> If alternatives of your plugin exist, you can provide some pros/cons of using yours over the others.
+I often found myself wanting to quickly reference or look for snippets in other files from my projects, so I made this to enhance my workflow.
+
+## TODO
+
+- [ ] `README` - Add video or gif
+- [ ] `opts.paths.static` - Support single files
+- [ ] `opts.picker.fzf` - Allow to override options to fzf
+- [ ] `opts.picker` - Support `telescope`
+- [ ] `opts.picker` - Support `mini.pick`
+- [ ] `opts.change_dir` - If the user returns to the file where the picker was opened, automatically change the directory to the git root of the selected folder (if it is a git repo)
