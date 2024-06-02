@@ -19,6 +19,10 @@
 - ⌘ Create a user command to quickly open the finder
 - ⛏️ Use `FzfLua` as the picker (Others to be added in the future)
 
+## ☄ Usage
+
+TODO
+
 ## 🏗️ Installation
 
 Installation with [folke/lazy.nvim](https://github.com/folke/lazy.nvim).
@@ -67,72 +71,35 @@ return {
 }
 ```
 
-## ☄ Getting started
-
-> Describe how to use the plugin the simplest way
-
-TODO
-
 ## ⚙ Configuration
-
-<details>
-<summary>Click to unfold the full list of options with their default values</summary>
 
 > **Note**: The options are also available in Neovim by calling `:h fff.options`
 
-```lua
----@class fff.Config.Paths.Dynamic
----@field path string The root directory paths
----@field scan_depth integer The depth of the search
----@field use_git boolean Wether to only include directories with a .git folder
-
----@class fff.Config.Paths
----@field static? table<string, string> A list of preset Paths
----@field dynamic? table<fff.Config.Paths.Dynamic> A list of dynamic paths
-
----@class fff.Config
----@field change_dir? boolean Wether to change the directory to the selected folder
----@field user_command? string Name for the user command to create
----@field paths? fff.Config.Paths Configuration for paths
-M.config = {
-  backend = "fzf",
-  change_dir = false,
-  user_command = nil,
-  paths = {
-    static = {},
-    dynamic = {
-      {
-        path = vim.fn.expand("~/repos"),
-        level = 1,
-        use_git = true,
-      },
-    },
-  },
-}
-```
-
-</details>
-
-## 🧰 Commands
-
-| Command   | Description         |
-| --------- | ------------------- |
-| `:Toggle` | Enables the plugin. |
+https://github.com/nikbrunner/fff.nvim/blob/main/lua/fff/config.lua#L3-L31
 
 ## ⌨ Contributing
 
 PRs and issues are always welcome. Make sure to provide as much context as possible when opening one.
 
-## 🗞 Wiki
+1. `make deps` to install docs/tests dependencies
+2. `make lint` to format the code
+3. `make documentation` to generate the documentation
+4. `make test` to run the tests
 
-You can find guides and showcase of the plugin on [the Wiki](https://github.com/nbr/fff.nvim/wiki)
+To run the linter you can use this.
+
+```bash
+lua-language-server --configpath .luarc.json --logpath luals-log --check .
+```
 
 ## 🎭 Motivations
 
 I often found myself wanting to quickly reference or look for snippets in other files from my projects, so I made this to enhance my workflow.
 
-## TODO
+## 🛣️ Roadmap
 
+- [ ] `doc` - Improve
+- [ ] `README` - Add usage
 - [ ] `README` - Add video or gif
 - [ ] `opts.paths.static` - Support single files
 - [ ] `opts.picker.fzf` - Allow to override options to fzf

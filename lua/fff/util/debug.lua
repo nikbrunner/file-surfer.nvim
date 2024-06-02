@@ -7,7 +7,9 @@ local D = {}
 ---@param ... any: the arguments of the formatted string.
 ---@private
 function D.log(scope, str, ...)
-    if _G.Fff.config ~= nil and not _G.Fff.config.debug then
+    local config = require("fff.config"):get()
+
+    if config ~= nil and not config.debug then
         return
     end
 

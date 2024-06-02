@@ -1,36 +1,33 @@
 local D = require("fff.util.debug")
 
-local State = { enabled = false }
+---@alias fff.State.PathMap table<string, string>
 
----Sets the state to its original value.
----
----@private
-function State:init()
-    self.enabled = false
+---@class fff.State
+---@field is_open boolean
+---@field path_map fff.State.PathMap
+local State = {
+    is_open = false,
+    path_map = {},
+}
+
+---@param path_map fff.State.PathMap
+function State:setPathMap(path_map)
+    D.log("state.setPathMap", "Setting path map.", path_map)
+    self.path_map = path_map
 end
 
----Saves the state in the global _G.Fff.state object.
----
----@private
-function State:save()
-    D.log("state.save", "saving state globally to _G.Fff.state")
-
-    _G.Fff.state = self
+function State:getPathMap()
+    return self.path_map
 end
 
----Whether the Fff is enabled or not.
----
----@private
-function State:setEnabled()
-    self.enabled = true
+---@param state boolean
+function State:setIsOpen(state)
+    D.log("state.setIsOpen", "Setting state to " .. tostring(state))
+    self.is_open = state
 end
 
----Whether the Fff is enabled or not.
----
----@return boolean: the `enabled` state value.
----@private
-function State:getEnabled()
-    return self.enabled
+function State:getIsOpen()
+    return self.is_open
 end
 
 return State

@@ -1,51 +1,55 @@
-local D = require("fff.util.debug")
+local Debug = require("fff.util.debug")
 
-local Fff = {}
+---@class fff.Config.Paths.Dynamic
+---@field path string The root directory paths
+---@field scan_depth integer The depth of the search
+---@field use_git boolean Whether to only include directories with a .git folder
 
---- Your plugin configuration with its default values.
----
---- Default values:
----@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
-Fff.options = {
-    -- Prints useful logs about what event are triggered, and reasons actions are executed.
-    debug = false,
+---@class fff.Config.Paths
+---@field static? table<string, string> A list of preset Paths
+---@field dynamic? table<fff.Config.Paths.Dynamic> A list of dynamic paths
+
+---@class fff.Config
+---@field debug? boolean Prints useful logs about what event are triggered, and reasons actions are executed.
+---@field backend? "fzflua" Which Picker to use. Currently only FzfLua is supported.
+---@field change_dir? boolean Whether to change the directory to selected folders
+---@field user_command? string Name for the user command to create
+---@field paths? fff.Config.Paths Configuration for paths
+
+local Config = {
+    ---@type fff.Config
+    config = {
+        debug = false,
+        backend = "fzflua",
+        change_dir = false,
+        user_command = nil,
+        paths = {
+            static = {},
+            dynamic = {},
+        },
+    },
 }
 
+---@param opts fff.Config
 ---@private
-local defaults = vim.deepcopy(Fff.options)
+function Config:init(opts)
+    opts = opts or {}
 
---- Defaults Fff options by merging user provided options with the default plugin values.
----
----@param options table Module config table. See |Fff.options|.
----
----@private
-function Fff.defaults(options)
-    local tde = function(t1, t2)
-        return vim.deepcopy(vim.tbl_deep_extend("keep", t1 or {}, t2 or {}))
-    end
+    local defaults = vim.deepcopy(Config.config)
+    local config = vim.tbl_deep_extend("force", defaults, opts)
 
-    Fff.options = tde(options, defaults)
+    self.config = config
 
-    -- let your user know that they provided a wrong value, this is reported when your plugin is executed.
-    assert(type(Fff.options.debug) == "boolean", "`debug` must be a boolean (`true` or `false`).")
+    -- Validate user options
+    assert(type(self.config.debug) == "boolean", "`debug` must be a boolean (`true` or `false`).")
 
-    return Fff.options
+    -- Warn about deprecated options
+    Debug.warnDeprecation(config)
 end
 
---- Define your fff setup.
----
----@param options table Module config table. See |Fff.options|.
----
----@usage `require("fff").setup()` (add `{}` with your |Fff.options| table)
-function Fff.setup(options)
-    Fff.options = Fff.defaults(options or {})
-
-    -- Useful for later checks that requires nvim 0.9 features at runtime.
-    Fff.options.hasNvim9 = vim.fn.has("nvim-0.9") == 1
-
-    D.warnDeprecation(Fff.options)
-
-    return Fff.options
+---@return fff.Config
+function Config:get()
+    return self.config
 end
 
-return Fff
+return Config

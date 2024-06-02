@@ -1,5 +1,7 @@
-Fff.disable()	fff.txt	/*Fff.disable()*
-Fff.enable()	fff.txt	/*Fff.enable()*
-Fff.options	fff.txt	/*Fff.options*
-Fff.setup()	fff.txt	/*Fff.setup()*
-Fff.toggle()	fff.txt	/*Fff.toggle()*
+Config:get()	fff.txt	/*Config:get()*
+M.find()	fff.txt	/*M.find()*
+M.setup()	fff.txt	/*M.setup()*
+State	fff.txt	/*State*
+State:setIsOpen()	fff.txt	/*State:setIsOpen()*
+State:setPathMap()	fff.txt	/*State:setPathMap()*
+change_dir()	fff.txt	/*change_dir()*

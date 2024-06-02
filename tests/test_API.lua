@@ -22,17 +22,6 @@ T["setup()"] = MiniTest.new_set()
 T["setup()"]["sets exposed methods and default options value"] = function()
     child.lua([[require('fff').setup()]])
 
-    -- global object that holds your plugin information
-    Helpers.expect.global_type(child, "_G.Fff", "table")
-
-    -- public methods
-    Helpers.expect.global_type(child, "_G.Fff.toggle", "function")
-    Helpers.expect.global_type(child, "_G.Fff.disable", "function")
-    Helpers.expect.global_type(child, "_G.Fff.enable", "function")
-
-    -- config
-    Helpers.expect.global_type(child, "_G.Fff.config", "table")
-
     -- assert the value, and the type
     Helpers.expect.config(child, "debug", false)
     Helpers.expect.config_type(child, "debug", "boolean")
