@@ -5,7 +5,7 @@ local Helpers = {}
 Helpers.expect = vim.deepcopy(MiniTest.expect)
 
 function Helpers.toggle(child)
-    child.cmd("YourPluginName")
+    child.cmd("Fff")
     Helpers.wait(child)
 end
 
@@ -18,7 +18,7 @@ function Helpers.currentWin(child)
 end
 
 function Helpers.winsInTab(child, tab)
-    tab = tab or "_G.YourPluginName.state.activeTab"
+    tab = tab or "_G.Fff.state.activeTab"
 
     return child.lua_get("vim.api.nvim_tabpage_list_wins(" .. tab .. ")")
 end
@@ -35,7 +35,7 @@ Helpers.expect.buf_width = MiniTest.new_expectation(
     "variable in child process matches",
     function(child, field, value)
         return Helpers.expect.equality(
-            child.lua_get("vim.api.nvim_win_get_width(_G.YourPluginName.state." .. field .. ")"),
+            child.lua_get("vim.api.nvim_win_get_width(_G.Fff.state." .. field .. ")"),
             value
         )
     end,
@@ -61,7 +61,7 @@ Helpers.expect.global_type = MiniTest.new_expectation(
 Helpers.expect.config = MiniTest.new_expectation(
     "config option matches",
     function(child, field, value)
-        return Helpers.expect.global(child, "_G.YourPluginName.config." .. field, value)
+        return Helpers.expect.global(child, "_G.Fff.config." .. field, value)
     end,
     errorMessage
 )
@@ -69,19 +69,19 @@ Helpers.expect.config = MiniTest.new_expectation(
 Helpers.expect.config_type = MiniTest.new_expectation(
     "config option type matches",
     function(child, field, value)
-        return Helpers.expect.global(child, "type(_G.YourPluginName.config." .. field .. ")", value)
+        return Helpers.expect.global(child, "type(_G.Fff.config." .. field .. ")", value)
     end,
     errorMessage
 )
 
 Helpers.expect.state = MiniTest.new_expectation("state matches", function(child, field, value)
-    return Helpers.expect.global(child, "_G.YourPluginName.state." .. field, value)
+    return Helpers.expect.global(child, "_G.Fff.state." .. field, value)
 end, errorMessage)
 
 Helpers.expect.state_type = MiniTest.new_expectation(
     "state type matches",
     function(child, field, value)
-        return Helpers.expect.global(child, "type(_G.YourPluginName.state." .. field .. ")", value)
+        return Helpers.expect.global(child, "type(_G.Fff.state." .. field .. ")", value)
     end,
     errorMessage
 )

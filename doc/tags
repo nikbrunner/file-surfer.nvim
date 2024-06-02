@@ -1,5 +1,5 @@
-YourPluginName.disable()	neovim-plugin-boilerplate.txt	/*YourPluginName.disable()*
-YourPluginName.enable()	neovim-plugin-boilerplate.txt	/*YourPluginName.enable()*
-YourPluginName.options	neovim-plugin-boilerplate.txt	/*YourPluginName.options*
-YourPluginName.setup()	neovim-plugin-boilerplate.txt	/*YourPluginName.setup()*
-YourPluginName.toggle()	neovim-plugin-boilerplate.txt	/*YourPluginName.toggle()*
+Fff.disable()	fff.txt	/*Fff.disable()*
+Fff.enable()	fff.txt	/*Fff.enable()*
+Fff.options	fff.txt	/*Fff.options*
+Fff.setup()	fff.txt	/*Fff.setup()*
+Fff.toggle()	fff.txt	/*Fff.toggle()*

@@ -1,26 +1,26 @@
-local S = require("your-plugin-name.state")
-local D = require("your-plugin-name.util.debug")
+local S = require("fff.state")
+local D = require("fff.util.debug")
 
 -- internal methods
-local YourPluginName = {}
+local Fff = {}
 
 -- Toggle the plugin by calling the `enable`/`disable` methods respectively.
 --
 --- @param scope string: internal identifier for logging purposes.
 ---@private
-function YourPluginName.toggle(scope)
+function Fff.toggle(scope)
     if S.getEnabled(S) then
-        return YourPluginName.disable(scope)
+        return Fff.disable(scope)
     end
 
-    return YourPluginName.enable(scope)
+    return Fff.enable(scope)
 end
 
 --- Initializes the plugin, sets event listeners and internal state.
 ---
 --- @param scope string: internal identifier for logging purposes.
 ---@private
-function YourPluginName.enable(scope)
+function Fff.enable(scope)
     if S.getEnabled(S) then
         D.log(scope, "Plugin is already enabled.")
 
@@ -30,7 +30,7 @@ function YourPluginName.enable(scope)
     -- sets the plugin as `enabled`
     S.setEnabled(S)
 
-    -- saves the state globally to `_G.YourPluginName.state`
+    -- saves the state globally to `_G.Fff.state`
     S.save(S)
 end
 
@@ -38,7 +38,7 @@ end
 ---
 --- @param scope string: internal identifier for logging purposes.
 ---@private
-function YourPluginName.disable(scope)
+function Fff.disable(scope)
     if not S.getEnabled(S) then
         D.log(scope, "Plugin is already disabled.")
 
@@ -48,8 +48,8 @@ function YourPluginName.disable(scope)
     -- resets the state to its initial value
     S.init(S)
 
-    -- saves the state globally to `_G.YourPluginName.state`
+    -- saves the state globally to `_G.Fff.state`
     S.save(S)
 end
 
-return YourPluginName
+return Fff
