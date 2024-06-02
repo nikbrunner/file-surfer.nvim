@@ -1,116 +1,108 @@
 <p align="center">
-  <h1 align="center">🔌  Neovim plugin boilerplate</h2>
+  <h1 align="center">fff.nvim</h2>
 </p>
 
 <p align="center">
-    Plug and play Neovim plugin boilerplate with pre-configured CI, CD, linter, docs and tests.
+    Find your most important files fast. 🏃‍♀️ 💨
 </p>
+
+<div align="center">
+    <img src="./assets/banner.jpg" alt="Banner" width="100%"/>
+</div>
 
 ## ⚡️ Features
 
-- interactive `setup` script
-- README.md template
-- Perfect for open-source:
-  - CODEOWNERS file for PR auto-assign
-  - Issues and PR templates
-- CD leveraging [release-please-action](https://github.com/google-github-actions/release-please-action)
-- CI:
-  - Test running on multiple Neovim version
-  - Lint check
-  - Documentation generation check
-  - Minimal run time, ideal for free plans
-- Docs with [mini.nvim `doc` plugin](https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/doc.lua)
-- Tests with [mini.nvim `test` plugin](https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/test.lua)
-    - Versioned testing with [`bob`](https://github.com/MordechaiHadad/bob)
-- Linting with [Stylua](https://github.com/JohnnyMorganz/StyLua)
-- LuaLS checks on CI (inspired by [lukas-reineke/ci-template.nvim](https://github.com/lukas-reineke/ci-template.nvim))
+- ⚡ Quickly find files in a predefined set of directories
+  - 📂 Define static paths
+  - 📦 Define dynamic paths to scan for directories with a certain depth and optionally only include directories with a `.git` folder
+- ✨ Automatically change directory to the selected Folder
+- ⌘ Create a user command to quickly open the finder
+- ⛏️ Use `FzfLua` as the picker (Others to be added in the future)
 
-## 📋 Installation
+## ☄ Usage
 
-> **Note**:
-> This section is only required if you wish to use the linter provided by the template.
+TODO
 
-- [Install Stylua linter](https://github.com/JohnnyMorganz/StyLua#installation)
-- [Install `bob` neovim version manager](https://github.com/MordechaiHadad/bob)
+## 🏗️ Installation
 
-## ☄ Getting started
+Installation with [folke/lazy.nvim](https://github.com/folke/lazy.nvim).
 
-The following checklist is all your need to do to start writing your first plugin.
-
-### 1 - Clone the template repository
-
-#### via HTTPs
-
-```sh
-git clone https://github.com/shortcuts/neovim-plugin-boilerplate.git ~/my-awesome-plugin.nvim
+```lua
+---@module "lazy"
+---@type LazyPluginSpec
+return {
+    "nikbrunner/fff.nvim",
+    dependencies = {
+        "ibhagwan/fzf-lua" -- Required for the picker
+    },
+    event = "VeryLazy",
+---@module "fff"
+---@type fff.Config
+    opts = {
+        -- Example opts for paths. By default, there are no paths defined.
+        paths = {
+            static = {
+                ["~/.scripts"] = vim.fn.expand("$HOME") .. "/.scripts",
+            },
+            dynamic = {
+                {
+                    -- For example add your project folder where you clone all your repos
+                    path = vim.fn.expand("~/repos"),
+                    scan_depth = 2,
+                    use_git = true, -- Only include directories with a .git folder
+                },
+                {
+                    -- Or add your config folder to quickly find your config files
+                    path = vim.fn.expand("$XDG_CONFIG_HOME"),
+                    scan_depth = 1,
+                },
+            },
+        },
+    },
+    keys = {
+        {
+            "<leader>f",
+            function()
+                require("fff").find()
+            end,
+            desc = "Find File in Folder",
+        },
+    },
+}
 ```
 
-#### via SSH
+## ⚙ Configuration
 
-```sh
-git clone git@github.com:shortcuts/neovim-plugin-boilerplate.git ~/my-awesome-plugin.nvim
-```
+> **Note**: The options are also available in Neovim by calling `:h fff.options`
 
-#### via GH
-```sh
-gh repo create my-awesome-plugin --template shortcuts/neovim-plugin-boilerplate --public --clone
-```
+https://github.com/nikbrunner/fff.nvim/blob/main/lua/fff/config.lua#L3-L31
 
-### 2 - Replace placeholder names with your plugin name
+## ⌨ Contributing
 
-#### ✨ Automatically
+PRs and issues are always welcome. Make sure to provide as much context as possible when opening one.
 
-The [setup script](https://github.com/shortcuts/neovim-plugin-boilerplate/blob/main/scripts/setup.sh) will rename files and placeholder names for you. Once done, you can remove anything `setup` related if you want to.
-
-```sh
-# interactive
-make setup
-
-# automated
-USERNAME=my-github-username PLUGIN_NAME=my-awesome-plugin REPOSITORY_NAME=my-awesome-plugin.nvim make setup
-```
-
-#### ✍️ Manually
-
-> **Note**:
-> The placeholder names are purposely written with different casing. Make sure to keep it.
-
-##### File names
-
-```sh
-rm -rf doc
-mv plugin/your-plugin-name.lua plugin/my-awesome-plugin.lua
-mv lua/your-plugin-name lua/my-awesome-plugin
-mv README_TEMPLATE.md README.md 
-
-```
-
-##### Search and replace placeholder occurrences:
-
-```vim
-:vimgrep /YourPluginName/ **/*
-:cfdo %s/YourPluginName/MyAwesomePlugin/g | update
-
-:vimgrep /your-plugin-name/ **/* .github/**
-:cfdo %s/your-plugin-name/my-awesome-plugin/g | update
-
-:vimgrep /YOUR_GITHUB_USERNAME/ .github/** **/*.md
-:cfdo %s/YOUR_GITHUB_USERNAME/shortcuts/g | update
-
-:vimgrep /YOUR_REPOSITORY_NAME/ **/*.md
-:cfdo %s/YOUR_REPOSITORY_NAME/my-awesome-plugin.nvim/g | update
-```
-
-### 3 - Code
-
-You can now start writing your plugin, make sure the following commands work:
 1. `make deps` to install docs/tests dependencies
 2. `make lint` to format the code
 3. `make documentation` to generate the documentation
 4. `make test` to run the tests
 
-Enjoy!
+To run the linter you can use this.
 
-## ⌨ Contributing
+```bash
+lua-language-server --configpath .luarc.json --logpath luals-log --check .
+```
 
-PRs and issues are always welcome. Make sure to provide as much context as possible when opening one.
+## 🎭 Motivations
+
+I often found myself wanting to quickly reference or look for snippets in other files from my projects, so I made this to enhance my workflow.
+
+## 🛣️ Roadmap
+
+- [ ] `doc` - Improve
+- [ ] `README` - Add usage
+- [ ] `README` - Add video or gif
+- [ ] `opts.paths.static` - Support single files
+- [ ] `opts.picker.fzf` - Allow to override options to fzf
+- [ ] `opts.picker` - Support `telescope`
+- [ ] `opts.picker` - Support `mini.pick`
+- [ ] `opts.change_dir` - If the user returns to the file where the picker was opened, automatically change the directory to the git root of the selected folder (if it is a git repo)

@@ -5,7 +5,7 @@ local Helpers = {}
 Helpers.expect = vim.deepcopy(MiniTest.expect)
 
 function Helpers.toggle(child)
-    child.cmd("YourPluginName")
+    child.cmd("Fff")
     Helpers.wait(child)
 end
 
@@ -18,7 +18,7 @@ function Helpers.currentWin(child)
 end
 
 function Helpers.winsInTab(child, tab)
-    tab = tab or "_G.YourPluginName.state.activeTab"
+    tab = tab or "require('fff.state').activeTab"
 
     return child.lua_get("vim.api.nvim_tabpage_list_wins(" .. tab .. ")")
 end
@@ -31,11 +31,54 @@ local function errorMessage(str, pattern)
     return string.format("Pattern: %s\nObserved string: %s", vim.inspect(pattern), str)
 end
 
+Helpers.expect.config = MiniTest.new_expectation(
+    "config option matches",
+    function(child, field, value)
+        return Helpers.expect.equality(
+            child.lua_get("require('fff.config'):get()." .. field),
+            value
+        )
+    end,
+    errorMessage
+)
+
+Helpers.expect.config_type = MiniTest.new_expectation(
+    "config option type matches",
+    function(child, field, value)
+        return Helpers.expect.global(
+            child,
+            "type(require('fff.config'):get()." .. field .. ")",
+            value
+        )
+    end,
+    errorMessage
+)
+
+Helpers.expect.state = MiniTest.new_expectation("state matches", function(child, field, value)
+    return Helpers.expect.equality(child.lua_get("require('fff.state')." .. field), value)
+end, errorMessage)
+
+Helpers.expect.state_type = MiniTest.new_expectation(
+    "state type matches",
+    function(child, field, value)
+        return Helpers.expect.global(child, "type(require('fff.state')." .. field .. ")", value)
+    end,
+    errorMessage
+)
+
+Helpers.expect.match = MiniTest.new_expectation("string matching", function(str, pattern)
+    return str:find(pattern) ~= nil
+end, errorMessage)
+
+Helpers.expect.no_match = MiniTest.new_expectation("no string matching", function(str, pattern)
+    return str:find(pattern) == nil
+end, errorMessage)
+
 Helpers.expect.buf_width = MiniTest.new_expectation(
     "variable in child process matches",
     function(child, field, value)
         return Helpers.expect.equality(
-            child.lua_get("vim.api.nvim_win_get_width(_G.YourPluginName.state." .. field .. ")"),
+            child.lua_get("vim.api.nvim_win_get_width(require('fff.state')." .. field),
             value
         )
     end,
@@ -58,42 +101,6 @@ Helpers.expect.global_type = MiniTest.new_expectation(
     errorMessage
 )
 
-Helpers.expect.config = MiniTest.new_expectation(
-    "config option matches",
-    function(child, field, value)
-        return Helpers.expect.global(child, "_G.YourPluginName.config." .. field, value)
-    end,
-    errorMessage
-)
-
-Helpers.expect.config_type = MiniTest.new_expectation(
-    "config option type matches",
-    function(child, field, value)
-        return Helpers.expect.global(child, "type(_G.YourPluginName.config." .. field .. ")", value)
-    end,
-    errorMessage
-)
-
-Helpers.expect.state = MiniTest.new_expectation("state matches", function(child, field, value)
-    return Helpers.expect.global(child, "_G.YourPluginName.state." .. field, value)
-end, errorMessage)
-
-Helpers.expect.state_type = MiniTest.new_expectation(
-    "state type matches",
-    function(child, field, value)
-        return Helpers.expect.global(child, "type(_G.YourPluginName.state." .. field .. ")", value)
-    end,
-    errorMessage
-)
-
-Helpers.expect.match = MiniTest.new_expectation("string matching", function(str, pattern)
-    return str:find(pattern) ~= nil
-end, errorMessage)
-
-Helpers.expect.no_match = MiniTest.new_expectation("no string matching", function(str, pattern)
-    return str:find(pattern) == nil
-end, errorMessage)
-
 -- Monkey-patch `MiniTest.new_child_neovim` with helpful wrappers
 Helpers.new_child_neovim = function()
     local child = MiniTest.new_child_neovim()
@@ -111,8 +118,7 @@ Helpers.new_child_neovim = function()
     child.setup = function()
         child.restart({ "-u", "scripts/minimal_init.lua" })
 
-        -- Change initial buffer to be readonly. This not only increases execution
-        -- speed, but more closely resembles manually opened Neovim.
+        -- Change initial buffer to be readonly.
         child.bo.readonly = false
     end
 
@@ -150,7 +156,6 @@ Helpers.new_child_neovim = function()
         if type(lines) == "number" then
             child.o.lines = lines
         end
-
         if type(columns) == "number" then
             child.o.columns = columns
         end

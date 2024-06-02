@@ -20,18 +20,7 @@ local T = MiniTest.new_set({
 T["setup()"] = MiniTest.new_set()
 
 T["setup()"]["sets exposed methods and default options value"] = function()
-    child.lua([[require('your-plugin-name').setup()]])
-
-    -- global object that holds your plugin information
-    Helpers.expect.global_type(child, "_G.YourPluginName", "table")
-
-    -- public methods
-    Helpers.expect.global_type(child, "_G.YourPluginName.toggle", "function")
-    Helpers.expect.global_type(child, "_G.YourPluginName.disable", "function")
-    Helpers.expect.global_type(child, "_G.YourPluginName.enable", "function")
-
-    -- config
-    Helpers.expect.global_type(child, "_G.YourPluginName.config", "table")
+    child.lua([[require('fff').setup()]])
 
     -- assert the value, and the type
     Helpers.expect.config(child, "debug", false)
@@ -39,7 +28,7 @@ T["setup()"]["sets exposed methods and default options value"] = function()
 end
 
 T["setup()"]["overrides default values"] = function()
-    child.lua([[require('your-plugin-name').setup({
+    child.lua([[require('fff').setup({
         -- write all the options with a value different than the default ones
         debug = true,
     })]])

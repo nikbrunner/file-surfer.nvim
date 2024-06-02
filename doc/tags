@@ -1,5 +1,7 @@
-YourPluginName.disable()	neovim-plugin-boilerplate.txt	/*YourPluginName.disable()*
-YourPluginName.enable()	neovim-plugin-boilerplate.txt	/*YourPluginName.enable()*
-YourPluginName.options	neovim-plugin-boilerplate.txt	/*YourPluginName.options*
-YourPluginName.setup()	neovim-plugin-boilerplate.txt	/*YourPluginName.setup()*
-YourPluginName.toggle()	neovim-plugin-boilerplate.txt	/*YourPluginName.toggle()*
+Config:get()	fff.txt	/*Config:get()*
+M.find()	fff.txt	/*M.find()*
+M.setup()	fff.txt	/*M.setup()*
+State	fff.txt	/*State*
+State:setIsOpen()	fff.txt	/*State:setIsOpen()*
+State:setPathMap()	fff.txt	/*State:setPathMap()*
+change_dir()	fff.txt	/*change_dir()*

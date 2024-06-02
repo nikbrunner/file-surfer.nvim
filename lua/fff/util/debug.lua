@@ -7,18 +7,13 @@ local D = {}
 ---@param ... any: the arguments of the formatted string.
 ---@private
 function D.log(scope, str, ...)
-    if _G.YourPluginName.config ~= nil and not _G.YourPluginName.config.debug then
+    local config = require("fff.config"):get()
+
+    if config ~= nil and not config.debug then
         return
     end
 
-    print(
-        string.format(
-            "[your-plugin-name@%s in '%s'] > %s",
-            os.date("%X"),
-            scope,
-            string.format(str, ...)
-        )
-    )
+    print(string.format("[fff@%s in '%s'] > %s", os.date("%X"), scope, string.format(str, ...)))
 end
 
 ---analyzes the user provided `setup` parameters and sends a message if they use a deprecated option, then gives the new option to use.
@@ -37,19 +32,13 @@ function D.warnDeprecation(options)
     for name, warning in pairs(rootDeprecated) do
         if options[name] ~= nil then
             usesDeprecatedOption = true
-            print(
-                string.format(
-                    "[your-plugin-name.nvim] `%s` %s",
-                    name,
-                    string.format(notice, warning)
-                )
-            )
+            print(string.format("[fff.nvim] `%s` %s", name, string.format(notice, warning)))
         end
     end
 
     if usesDeprecatedOption then
-        print("[your-plugin-name.nvim]     sorry to bother you with the breaking changes :(")
-        print("[your-plugin-name.nvim]     use `:h YourPluginName.options` to read more.")
+        print("[fff.nvim]     sorry to bother you with the breaking changes :(")
+        print("[fff.nvim]     use `:h Fff.options` to read more.")
     end
 end
 

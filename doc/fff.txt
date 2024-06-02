@@ -1,0 +1,90 @@
+==============================================================================
+------------------------------------------------------------------------------
+                                                                      *M.find()*
+                                   `M.find`()
+the fff finder
+Return ~
+`(nil)`
+
+------------------------------------------------------------------------------
+                                                                     *M.setup()*
+                               `M.setup`({opts})
+Parameters ~
+{opts} fff.Config Module config `(table.)` See |Fff.options|.
+
+Usage ~
+`require("fff").setup()` (add `{}` with your |Fff.options| table)
+
+
+==============================================================================
+------------------------------------------------------------------------------
+Class ~
+{fff.Config.Paths.Dynamic}
+Fields ~
+{path} `(string)` The root directory paths
+{scan_depth} `(integer)` The depth of the search
+{use_git} `(boolean)` Whether to only include directories with a .git folder
+
+------------------------------------------------------------------------------
+Class ~
+{fff.Config.Paths}
+Fields ~
+{static} `(optional)` `(table<string, string>)` A list of preset Paths
+{dynamic} `(optional)` `(table<fff.Config.Paths.Dynamic>)` A list of dynamic paths
+
+------------------------------------------------------------------------------
+Class ~
+{fff.Config}
+Fields ~
+{debug} `(optional)` `(boolean)` Prints useful logs about what event are triggered, and reasons actions are executed.
+{backend} `(optional)` "fzflua" Which Picker to use. Currently only FzfLua is supported.
+{change_dir} `(optional)` `(boolean)` Whether to change the directory to selected folders
+{user_command} `(optional)` `(string)` Name for the user command to create
+{paths} `(optional)` fff.Config.Paths Configuration for paths
+
+------------------------------------------------------------------------------
+                                                                  *Config:get()*
+                                 `Config:get`()
+Return ~
+fff.Config
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                         *State*
+                                    `State`
+Class ~
+{fff.State}
+Fields ~
+{is_open} `(boolean)`
+{path_map} `(table<string, string>)`
+
+------------------------------------------------------------------------------
+                                                            *State:setPathMap()*
+                         `State:setPathMap`({path_map})
+Parameters ~
+{path_map} `(table<string, string>)`
+
+------------------------------------------------------------------------------
+                                                             *State:setIsOpen()*
+                           `State:setIsOpen`({state})
+Parameters ~
+{state} `(boolean)`
+
+
+==============================================================================
+------------------------------------------------------------------------------
+                                                                  *change_dir()*
+                              `change_dir`({dir})
+put in lib
+Parameters ~
+{dir} `(string)`
+
+------------------------------------------------------------------------------
+Parameters ~
+{config} fff.Config
+{folder_map} `(table<string, string>)`
+{choices} `(string[])`
+
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
