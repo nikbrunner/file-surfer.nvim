@@ -1,15 +1,15 @@
-local State = require("fff.state")
-local Config = require("fff.config")
-local PathMap = require("fff.path_map")
+local State = require("file-surfer.state")
+local Config = require("file-surfer.config")
+local PathMap = require("file-surfer.path_map")
 
 local M = {
     ---TODO: put into config and type the keys
     backend_picker_map = {
-        fzflua = "fff.pickers.fzflua",
+        fzflua = "file-surfer.pickers.fzflua",
     },
 }
 
----Open the fff finder
+---Open the file-surfer finder
 ---@return nil
 M.find = function()
     local config = Config:get()
@@ -25,9 +25,9 @@ M.find = function()
 end
 
 -- Set up function for plugin configuration
----@param opts fff.Config Module config table. See |Fff.options|.
+---@param opts file-surfer.Config Module config table. See |file-surfer.options|.
 ---
----@usage `require("fff").setup()` (add `{}` with your |Fff.options| table)
+---@usage `require("file-surfer").setup()` (add `{}` with your |file-surfer.options| table)
 M.setup = function(opts)
     Config:init(opts)
 

@@ -1,7 +1,7 @@
 local M = {}
 
 ---Helper function to get subdirectories of a given path and return them as a list
----@param dynamic_path fff.Config.Paths.Dynamic
+---@param dynamic_path file-surfer.Config.Paths.Dynamic
 ---@return table
 ---@private
 local function dynamically_scan_dirs(dynamic_path)
@@ -50,10 +50,10 @@ local function dynamically_scan_dirs(dynamic_path)
 end
 
 ---Populate folder presets with user-defined paths and repositories
----@param config fff.Config
+---@param config file-surfer.Config
 ---@private
 function M.populate(config)
-    local State = require("fff.state")
+    local State = require("file-surfer.state")
 
     local path_map = {}
 

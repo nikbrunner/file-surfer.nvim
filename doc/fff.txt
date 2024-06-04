@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                                                       *M.find()*
                                    `M.find`()
-the fff finder
+the file-surfer finder
 Return ~
 `(nil)`
 
@@ -10,16 +10,16 @@ Return ~
                                                                      *M.setup()*
                                `M.setup`({opts})
 Parameters ~
-{opts} fff.Config Module config `(table.)` See |Fff.options|.
+{opts} file-surfer.Config Module config `(table.)` See |file-surfer.options|.
 
 Usage ~
-`require("fff").setup()` (add `{}` with your |Fff.options| table)
+`require("file-surfer").setup()` (add `{}` with your |file-surfer.options| table)
 
 
 ==============================================================================
 ------------------------------------------------------------------------------
 Class ~
-{fff.Config.Paths.Dynamic}
+{file-surfer.Config.Paths.Dynamic}
 Fields ~
 {path} `(string)` The root directory paths
 {scan_depth} `(integer)` The depth of the search
@@ -27,26 +27,26 @@ Fields ~
 
 ------------------------------------------------------------------------------
 Class ~
-{fff.Config.Paths}
+{file-surfer.Config.Paths}
 Fields ~
 {static} `(optional)` `(table<string, string>)` A list of preset Paths
-{dynamic} `(optional)` `(table<fff.Config.Paths.Dynamic>)` A list of dynamic paths
+{dynamic} `(optional)` `(table<file-surfer.Config.Paths.Dynamic>)` A list of dynamic paths
 
 ------------------------------------------------------------------------------
 Class ~
-{fff.Config}
+{file-surfer.Config}
 Fields ~
 {debug} `(optional)` `(boolean)` Prints useful logs about what event are triggered, and reasons actions are executed.
 {backend} `(optional)` "fzflua" Which Picker to use. Currently only FzfLua is supported.
 {change_dir} `(optional)` `(boolean)` Whether to change the directory to selected folders
 {user_command} `(optional)` `(string)` Name for the user command to create
-{paths} `(optional)` fff.Config.Paths Configuration for paths
+{paths} `(optional)` file-surfer.Config.Paths Configuration for paths
 
 ------------------------------------------------------------------------------
                                                                   *Config:get()*
                                  `Config:get`()
 Return ~
-fff.Config
+file-surfer.Config
 
 
 ==============================================================================
@@ -54,7 +54,7 @@ fff.Config
                                                                          *State*
                                     `State`
 Class ~
-{fff.State}
+{file-surfer.State}
 Fields ~
 {is_open} `(boolean)`
 {path_map} `(table<string, string>)`
@@ -82,7 +82,7 @@ Parameters ~
 
 ------------------------------------------------------------------------------
 Parameters ~
-{config} fff.Config
+{config} file-surfer.Config
 {folder_map} `(table<string, string>)`
 {choices} `(string[])`
 

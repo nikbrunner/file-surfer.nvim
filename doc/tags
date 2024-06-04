@@ -1,7 +1,7 @@
-Config:get()	fff.txt	/*Config:get()*
-M.find()	fff.txt	/*M.find()*
-M.setup()	fff.txt	/*M.setup()*
-State	fff.txt	/*State*
-State:setIsOpen()	fff.txt	/*State:setIsOpen()*
-State:setPathMap()	fff.txt	/*State:setPathMap()*
-change_dir()	fff.txt	/*change_dir()*
+Config:get()	file-surfer.txt	/*Config:get()*
+M.find()	file-surfer.txt	/*M.find()*
+M.setup()	file-surfer.txt	/*M.setup()*
+State	file-surfer.txt	/*State*
+State:setIsOpen()	file-surfer.txt	/*State:setIsOpen()*
+State:setPathMap()	file-surfer.txt	/*State:setPathMap()*
+change_dir()	file-surfer.txt	/*change_dir()*

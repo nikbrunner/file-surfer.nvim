@@ -36,8 +36,8 @@ return {
         "ibhagwan/fzf-lua" -- Required for the picker
     },
     event = "VeryLazy",
----@module "fff"
----@type fff.Config
+---@module "file-surfer"
+---@type file-surfer.Config
     opts = {
         -- Example opts for paths. By default, there are no paths defined.
         paths = {
@@ -63,7 +63,7 @@ return {
         {
             "<leader>f",
             function()
-                require("fff").find()
+                require("file-surfer").find()
             end,
             desc = "Find File in Folder",
         },
@@ -73,9 +73,9 @@ return {
 
 ## ⚙ Configuration
 
-> **Note**: The options are also available in Neovim by calling `:h fff.options`
+> **Note**: The options are also available in Neovim by calling `:h file-surfer.options`
 
-https://github.com/nikbrunner/file-surfer.nvim/blob/main/lua/fff/config.lua#L3-L31
+https://github.com/nikbrunner/file-surfer.nvim/blob/main/lua/file-surfer/config.lua#L3-L31
 
 ## ⌨ Contributing
 

@@ -7,13 +7,20 @@ local D = {}
 ---@param ... any: the arguments of the formatted string.
 ---@private
 function D.log(scope, str, ...)
-    local config = require("fff.config"):get()
+    local config = require("file-surfer.config"):get()
 
     if config ~= nil and not config.debug then
         return
     end
 
-    print(string.format("[fff@%s in '%s'] > %s", os.date("%X"), scope, string.format(str, ...)))
+    print(
+        string.format(
+            "[file-surfer@%s in '%s'] > %s",
+            os.date("%X"),
+            scope,
+            string.format(str, ...)
+        )
+    )
 end
 
 ---analyzes the user provided `setup` parameters and sends a message if they use a deprecated option, then gives the new option to use.
@@ -32,13 +39,13 @@ function D.warnDeprecation(options)
     for name, warning in pairs(rootDeprecated) do
         if options[name] ~= nil then
             usesDeprecatedOption = true
-            print(string.format("[fff.nvim] `%s` %s", name, string.format(notice, warning)))
+            print(string.format("[file-surfer.nvim] `%s` %s", name, string.format(notice, warning)))
         end
     end
 
     if usesDeprecatedOption then
-        print("[fff.nvim]     sorry to bother you with the breaking changes :(")
-        print("[fff.nvim]     use `:h Fff.options` to read more.")
+        print("[file-surfer.nvim]     sorry to bother you with the breaking changes :(")
+        print("[file-surfer.nvim]     use `:h file-surfer.options` to read more.")
     end
 end
 
