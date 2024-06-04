@@ -65,7 +65,7 @@ return {
             function()
                 require("file-surfer").find()
             end,
-            desc = "Find File in Folder",
+            desc = "󱝆 Surf",
         },
     },
 }
@@ -98,7 +98,7 @@ I often found myself wanting to quickly reference or look for snippets in other 
 
 ## 🛣️ Roadmap
 
-- [ ] Rename to `file-surfer.nvim` (Update Banner)
+- [x] Rename to `file-surfer.nvim` (Update Banner)
 - [ ] Simply `opts.path` to be flat table
 - [ ] Support Blob Patterns e.g. `~/.config/*`
 - [ ] Improve git root finding algo ("lsp" & "pattern")
