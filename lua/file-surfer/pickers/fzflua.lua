@@ -1,13 +1,13 @@
-local State = require("fff.state")
+local State = require("file-surfer.state")
 
 ---TODO: put in lib
 ---@param dir string
 local function change_dir(dir)
-    vim.notify("Changing directory to " .. dir, vim.log.levels.INFO, { title = "fff.nvim" })
+    vim.notify("Changing directory to " .. dir, vim.log.levels.INFO, { title = "file-surfer.nvim" })
     vim.cmd("cd " .. dir)
 end
 
----@param config fff.Config
+---@param config file-surfer.Config
 ---@param folder_map table<string, string>
 ---@param choices string[]
 return function(config, folder_map, choices)
@@ -86,7 +86,7 @@ return function(config, folder_map, choices)
             row = 0.35, -- window row position (0=top, 1=bottom)
             col = 0.50, -- window col position (0=left, 1=right)
             border = "single",
-            title = "fff.nvim",
+            title = "file-surfer.nvim",
             title_pos = "center", -- 'left', 'center' or 'right'
             fullscreen = false, -- start fullscreen?
             preview = {

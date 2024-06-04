@@ -20,7 +20,7 @@ local T = MiniTest.new_set({
 T["setup()"] = MiniTest.new_set()
 
 T["setup()"]["sets exposed methods and default options value"] = function()
-    child.lua([[require('fff').setup()]])
+    child.lua([[require('file-surfer').setup()]])
 
     -- assert the value, and the type
     Helpers.expect.config(child, "debug", false)
@@ -28,7 +28,7 @@ T["setup()"]["sets exposed methods and default options value"] = function()
 end
 
 T["setup()"]["overrides default values"] = function()
-    child.lua([[require('fff').setup({
+    child.lua([[require('file-surfer').setup({
         -- write all the options with a value different than the default ones
         debug = true,
     })]])

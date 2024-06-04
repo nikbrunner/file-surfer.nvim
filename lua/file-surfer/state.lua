@@ -1,16 +1,16 @@
-local D = require("fff.util.debug")
+local D = require("file-surfer.util.debug")
 
----@alias fff.State.PathMap table<string, string>
+---@alias file-surfer.State.PathMap table<string, string>
 
----@class fff.State
+---@class file-surfer.State
 ---@field is_open boolean
----@field path_map fff.State.PathMap
+---@field path_map file-surfer.State.PathMap
 local State = {
     is_open = false,
     path_map = {},
 }
 
----@param path_map fff.State.PathMap
+---@param path_map file-surfer.State.PathMap
 function State:setPathMap(path_map)
     D.log("state.setPathMap", "Setting path map.", path_map)
     self.path_map = path_map

@@ -1,23 +1,23 @@
-local Debug = require("fff.util.debug")
+local Debug = require("file-surfer.util.debug")
 
----@class fff.Config.Paths.Dynamic
+---@class file-surfer.Config.Paths.Dynamic
 ---@field path string The root directory paths
 ---@field scan_depth integer The depth of the search
 ---@field use_git boolean Whether to only include directories with a .git folder
 
----@class fff.Config.Paths
+---@class file-surfer.Config.Paths
 ---@field static? table<string, string> A list of preset Paths
----@field dynamic? table<fff.Config.Paths.Dynamic> A list of dynamic paths
+---@field dynamic? table<file-surfer.Config.Paths.Dynamic> A list of dynamic paths
 
----@class fff.Config
+---@class file-surfer.Config
 ---@field debug? boolean Prints useful logs about what event are triggered, and reasons actions are executed.
 ---@field backend? "fzflua" Which Picker to use. Currently only FzfLua is supported.
 ---@field change_dir? boolean Whether to change the directory to selected folders
 ---@field user_command? string Name for the user command to create
----@field paths? fff.Config.Paths Configuration for paths
+---@field paths? file-surfer.Config.Paths Configuration for paths
 
 local Config = {
-    ---@type fff.Config
+    ---@type file-surfer.Config
     config = {
         debug = false,
         backend = "fzflua",
@@ -30,7 +30,7 @@ local Config = {
     },
 }
 
----@param opts fff.Config
+---@param opts file-surfer.Config
 ---@private
 function Config:init(opts)
     opts = opts or {}
@@ -47,7 +47,7 @@ function Config:init(opts)
     Debug.warnDeprecation(config)
 end
 
----@return fff.Config
+---@return file-surfer.Config
 function Config:get()
     return self.config
 end
