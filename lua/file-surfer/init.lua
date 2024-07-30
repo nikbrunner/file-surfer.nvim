@@ -40,6 +40,10 @@ M.setup = function(opts)
             M.find()
         end, {})
     end
+
+    if config.tmux.default_mappings then
+        require("file-surfer.util.tmux").create_tmux_integration_bindings()
+    end
 end
 
 return M
