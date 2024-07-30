@@ -99,6 +99,9 @@ I often found myself wanting to quickly reference or look for snippets in other 
 ## 🛣️ Roadmap
 
 - [x] Rename to `file-surfer.nvim` (Update Banner)
+- [x] TMUX integration: create new session of selection
+- [x] TMUX integration: create bindings
+- [ ] Persist `folder_map`
 - [ ] Simply `opts.path` to be flat table
 - [ ] Support Blob Patterns e.g. `~/.config/*`
 - [ ] Improve git root finding algo ("lsp" & "pattern")

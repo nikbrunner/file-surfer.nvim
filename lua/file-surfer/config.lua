@@ -8,6 +8,10 @@ local Debug = require("file-surfer.util.debug")
 ---@class file-surfer.Config.Paths
 ---@field static? table<string, string> A list of preset Paths
 ---@field dynamic? table<file-surfer.Config.Paths.Dynamic> A list of dynamic paths
+---
+---@class file-surfer.Config.Tmux Configuration for tmux integration
+---@field enable? boolean Whether to enable tmux integration
+---@field default_mappings? boolean Whether to create tmux integration bindings
 
 ---@class file-surfer.Config
 ---@field debug? boolean Prints useful logs about what event are triggered, and reasons actions are executed.
@@ -15,6 +19,7 @@ local Debug = require("file-surfer.util.debug")
 ---@field change_dir? boolean Whether to change the directory to selected folders
 ---@field user_command? string Name for the user command to create
 ---@field paths? file-surfer.Config.Paths Configuration for paths
+---@field tmux? file-surfer.Config.Tmux Configuration for tmux integration
 
 local Config = {
     ---@type file-surfer.Config
@@ -26,6 +31,10 @@ local Config = {
         paths = {
             static = {},
             dynamic = {},
+        },
+        tmux = {
+            enable = true,
+            default_mappings = false,
         },
     },
 }

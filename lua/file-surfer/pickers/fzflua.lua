@@ -9,6 +9,52 @@ end
 
 ---@param config file-surfer.Config
 ---@param folder_map table<string, string>
+local function create_actions(config, folder_map)
+    local is_tmux_enabled = config.tmux.enable
+
+    local actions = {
+        ["default"] = {
+            fn = function(choice)
+                change_dir(folder_map[choice[1]])
+            end,
+            header = "Change directory",
+        },
+
+        ["ctrl-f"] = {
+            fn = function(choice)
+                local selected_folder = folder_map[choice[1]]
+
+                if config.change_dir then
+                    change_dir(selected_folder)
+                end
+
+                require("fzf-lua").files({
+                    cwd = selected_folder,
+                })
+            end,
+            -- TODO:  make these work
+            header = "Pick a project folder",
+        },
+    }
+
+    if is_tmux_enabled then
+        actions["ctrl-n"] = {
+            fn = function(choice)
+                local tmux = require("file-surfer.util.tmux")
+                local session_name = choice[1]
+                local session_cwd = folder_map[choice[1]]
+
+                tmux.start_session_in_cwd(session_name, session_cwd)
+            end,
+            header = "New session in TMUX",
+        }
+    end
+
+    return actions
+end
+
+---@param config file-surfer.Config
+---@param folder_map table<string, string>
 ---@param choices string[]
 return function(config, folder_map, choices)
     require("fzf-lua").fzf_exec(choices, {
@@ -35,14 +81,14 @@ return function(config, folder_map, choices)
         fzf_opts = {
             ["--ansi"] = "",
             ["--prompt"] = "  ",
-            ["--info"] = "hidden",
+            -- ["--info"] = "hidden",
             ["--height"] = "100%",
             ["--layout"] = "reverse",
             ["--keep-right"] = "",
             ["--reverse"] = "",
             ["--padding"] = "2,10",
             ["--no-scrollbar"] = "",
-            ["--no-separator"] = "",
+            -- ["--no-separator"] = "",
         },
 
         fzf_colors = {
@@ -67,7 +113,6 @@ return function(config, folder_map, choices)
         files = {
             prompt = "  ",
             multiprocess = true, -- run command in a separate process
-            header = false,
             find_opts = [[-type f -not -path '*/\.git/*' -not -name '.DS_Store' -printf '%P\n']],
             rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!.DS_Store'",
             fd_opts = "--color=never --type f --hidden --follow --exclude .git --exclude .DS_Store",
@@ -75,7 +120,7 @@ return function(config, folder_map, choices)
             -- parameter to a different folder than the current working directory
             -- uncomment if you wish to force display of the cwd as part of the
             -- query prompt string (fzf.vim style), header line or both
-            cwd_prompt = false,
+            cwd_prompt = true,
             cwd_prompt_shorten_len = 32, -- shorten prompt beyond this length
             cwd_prompt_shorten_val = 1, -- shortened path parts length
         },
@@ -113,23 +158,6 @@ return function(config, folder_map, choices)
             end,
         },
 
-        actions = {
-            ["default"] = {
-                function(choice)
-                    local selected_folder = folder_map[choice[1]]
-
-                    if config.change_dir then
-                        change_dir(selected_folder)
-                    end
-
-                    require("fzf-lua").files({
-                        cwd = selected_folder,
-                    })
-                end,
-            },
-            ["alt-d"] = function(choice)
-                change_dir(folder_map[choice[1]])
-            end,
-        },
+        actions = create_actions(config, folder_map),
     })
 end
