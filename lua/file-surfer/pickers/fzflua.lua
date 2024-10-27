@@ -17,13 +17,6 @@ local function create_actions(config, folder_map)
     local actions = {
         ["default"] = {
             fn = function(choice)
-                change_dir(folder_map[choice[1]])
-            end,
-            header = "Change directory",
-        },
-
-        ["ctrl-f"] = {
-            fn = function(choice)
                 local selected_folder = folder_map[choice[1]]
 
                 if config.change_dir then
@@ -36,6 +29,13 @@ local function create_actions(config, folder_map)
             end,
             -- TODO:  make these work
             header = "Pick a project folder",
+        },
+
+        ["alt-d"] = {
+            fn = function(choice)
+                change_dir(folder_map[choice[1]])
+            end,
+            header = "Change directory",
         },
     }
 
