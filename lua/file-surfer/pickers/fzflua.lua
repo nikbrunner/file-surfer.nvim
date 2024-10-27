@@ -83,14 +83,9 @@ return function(config, folder_map, choices)
         fzf_opts = {
             ["--ansi"] = "",
             ["--prompt"] = "  ",
-            -- ["--info"] = "hidden",
             ["--height"] = "100%",
-            ["--layout"] = "reverse",
-            ["--keep-right"] = "",
-            ["--reverse"] = "",
             ["--padding"] = "2,10",
             ["--no-scrollbar"] = "",
-            -- ["--no-separator"] = "",
         },
 
         fzf_colors = {
@@ -132,7 +127,7 @@ return function(config, folder_map, choices)
             width = 0.85, -- window width
             row = 0.35, -- window row position (0=top, 1=bottom)
             col = 0.50, -- window col position (0=left, 1=right)
-            border = "single",
+            border = "none",
             title = "file-surfer.nvim",
             title_pos = "center", -- 'left', 'center' or 'right'
             fullscreen = false, -- start fullscreen?
@@ -141,7 +136,7 @@ return function(config, folder_map, choices)
                 border = "border", -- border|noborder, applies only to
                 hidden = "nohidden", -- hidden|nohidden
                 vertical = "up:65%", -- up|down:size
-                horizontal = "left:50%", -- right|left:size
+                horizontal = "right:50%", -- right|left:size
                 layout = "flex", -- horizontal|vertical|flex
                 flip_columns = 200, -- #cols to switch to horizontal on flex
                 title = true, -- preview border title (file/buf)?
