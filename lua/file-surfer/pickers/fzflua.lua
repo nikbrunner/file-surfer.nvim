@@ -1,5 +1,7 @@
 local State = require("file-surfer.state")
 
+-- TODO: Try to make headers work: https://github.com/ibhagwan/fzf-lua/issues/1351#issuecomment-2265742596
+
 ---TODO: put in lib
 ---@param dir string
 local function change_dir(dir)
